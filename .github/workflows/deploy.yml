@@ -1,0 +1,57 @@
+# 靜態輸出（output: 'export'）+ 部署到 GitHub Pages。
+# 前置需求（在 repo Settings → Pages）：Source 選「GitHub Actions」（不是 branch）。
+#
+# 網址：預設走專案頁 https://<你的帳號>.github.io/<repo名>/
+#   → NEXT_PUBLIC_BASE_PATH 用 `/<repo名>`（下方以 ${{ github.event.repository.name }} 自動帶入，
+#     所以 repo 叫什麼都不用改這個檔）。
+# 之後若要換自訂網域（從網域根目錄 serve）：
+#   1) 在 public/ 放一個 CNAME 檔（內容為網域，如 fm.lyztw.com）
+#   2) 把下面 NEXT_PUBLIC_BASE_PATH 那一行刪掉（basePath 變空字串）
+#   3) NEXT_PUBLIC_SITE_ORIGIN 改成 https://你的網域
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - name: Build (static export)
+        run: npm run build
+        env:
+          # 目前先放在 github.io 專案頁（about.fm.lyztw.com 的 DNS 還沒設）。
+          # 換成自訂網域時：刪掉 NEXT_PUBLIC_BASE_PATH 這行、SITE_ORIGIN 改 https://about.fm.lyztw.com、加回 public/CNAME（見 PROGRESS.md）。
+          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
+          NEXT_PUBLIC_SITE_ORIGIN: https://lyztw-tech.github.io
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
