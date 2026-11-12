@@ -59,6 +59,24 @@ const CHAPTERS: Chapter[] = [
   },
 ];
 
+/**
+ * 捲動進度 → 場景進度：每個停點前後各留一段「停住」（HOLD），
+ * 這段捲動時鏡頭與文字不動，手機一滑才不會直接飛過頭。
+ */
+const HOLD = 0.045;
+function remap(raw: number) {
+  for (let k = 0; k < STOPS.length; k++) {
+    if (Math.abs(raw - STOPS[k]) <= HOLD) return STOPS[k];
+    if (k === STOPS.length - 1 && raw >= STOPS[k]) return STOPS[k];
+    if (k < STOPS.length - 1 && raw > STOPS[k] + HOLD && raw < STOPS[k + 1] - HOLD) {
+      const a = STOPS[k] + HOLD;
+      const b = STOPS[k + 1] - HOLD;
+      return STOPS[k] + ((raw - a) / (b - a)) * (STOPS[k + 1] - STOPS[k]);
+    }
+  }
+  return raw;
+}
+
 /** 第 k 段文字的可見度 */
 function fade(p: number, k: number) {
   if (k === 0) return Math.max(0, Math.min(1, (0.09 - p) / 0.04));
@@ -99,7 +117,8 @@ export function FlyIntro() {
 
     const tick = () => {
       raf = 0;
-      const p = progress();
+      const raw = progress();
+      const p = remap(raw);
       scene?.setProgress(p);
       chRefs.current.forEach((el, k) => {
         if (!el) return;
@@ -108,7 +127,7 @@ export function FlyIntro() {
         el.style.transform = `translateY(${(1 - o) * 14}px)`;
         el.style.pointerEvents = o > 0.5 ? 'auto' : 'none';
       });
-      if (barRef.current) barRef.current.style.transform = `scaleX(${p})`;
+      if (barRef.current) barRef.current.style.transform = `scaleX(${raw})`;
       // 頂部選單在飛行區上方時用深色，離開後回到一般樣式
       const r = sec.getBoundingClientRect();
       document.documentElement.classList.toggle('nav-dark', r.bottom > 62);
@@ -149,6 +168,10 @@ export function FlyIntro() {
 
   return (
     <section className="fly" ref={secRef} id="top" aria-label="建築飛行導覽">
+      {/* 捲動吸附點：每個停點一個（手機甩動時會停在主題上） */}
+      {[...STOPS, 1].map((s) => (
+        <i key={s} className="fly-snap" style={{ top: `calc(${s} * (100% - 100vh))` }} aria-hidden="true" />
+      ))}
       <div className="fly-stage">
         <canvas ref={canvasRef} className="fly-canvas" />
         <div className="fly-shade" />

@@ -2603,3 +2603,16 @@ html.nav-dark .theme-btn {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* 飛行段的捲動吸附（proximity：靠近停點才吸，不會卡住） */
+html {
+  scroll-snap-type: y proximity;
+}
+.fly-snap {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  scroll-snap-align: start;
+  pointer-events: none;
+}
