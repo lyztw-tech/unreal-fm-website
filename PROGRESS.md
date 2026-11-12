@@ -9,7 +9,6 @@
 ## 下一步
 - [ ] DNS：`about.fm.lyztw.com` CNAME → `lyztw-tech.github.io`
 - [ ] DNS 生效後換自訂網域（下面四步）
-- [ ] 正式 logo（目前是 `src/components/mark.tsx` 的 SVG 示意標記）
 
 ### 換成自訂網域 about.fm.lyztw.com
 1. 新增 `public/CNAME`，內容一行：`about.fm.lyztw.com`
