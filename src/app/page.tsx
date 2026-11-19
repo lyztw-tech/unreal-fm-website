@@ -61,7 +61,40 @@ const S_ENV: ShotDef[] = [
   { label: '趨勢分析', title: '門檻線與異常時段標示，附期間統計', node: <EnvTrendMock /> },
 ];
 
-/* 現場部署：只寫目前架構真的做到的（見 docs/feature-copy.md「現場部署」） */
+/* 雙平台：桌面程式（UE）＋網頁版（fm-platform），共用同一個後端（見 docs/feature-copy.md「雙平台」） */
+const PLATFORMS = [
+  {
+    ic: '▣',
+    t: '桌面程式',
+    p: '即時 3D 引擎呈現整棟大樓：透視、依樓層剖開、監視牆可開成獨立視窗，適合中控室的大螢幕。',
+  },
+  {
+    ic: '◎',
+    t: '網頁版',
+    p: '開瀏覽器、以帳號登入就能用，不必安裝。一樣有 3D 模型、設備定位與樓層用電熱力圖。',
+  },
+  {
+    ic: '⇌',
+    t: '同一份資料',
+    p: '兩個版本接同一個後端：報修、保養、出勤與告警，在哪一邊處理，另一邊都看得到。',
+  },
+];
+
+/* 部署方式：雲端或地端二選一（見 docs/feature-copy.md「部署方式」）。雲端目前以網頁版使用。 */
+const MODES = [
+  {
+    ic: '⌂',
+    t: '地端部署',
+    p: '整套系統裝在案場自己的主機與內網，桌面程式與網頁版都能用；設備資料、工單、照片不經過外部雲端。',
+  },
+  {
+    ic: '☁',
+    t: '雲端部署',
+    p: '網頁版與後端放在雲端主機，每個客戶一套獨立環境；不用在案場架主機，用瀏覽器登入就能使用。',
+  },
+];
+
+/* 地端部署的資料安全：只寫目前架構真的做到的（見 docs/feature-copy.md「部署方式」） */
 const DEPLOY = [
   {
     ic: '⌂',
@@ -112,6 +145,26 @@ export default function Home() {
       <main>
         <FlyIntro />
         <Hero />
+
+        {/* ═══ 雙平台 ═══ */}
+        <section className="sect wrap" id="platforms">
+          <SectHead
+            eyebrow="雙平台"
+            title={<>中控室用桌面程式，辦公室開瀏覽器。</>}
+            sub="桌面程式與網頁版共用同一個後端與資料，依使用的場合選擇，也可以兩個一起用。"
+          />
+          <div className="fgrid">
+            {PLATFORMS.map((d, i) => (
+              <Rv key={d.t} className="fcard" delay={(i + 1) as 1 | 2 | 3}>
+                <div className="fic" aria-hidden="true">
+                  {d.ic}
+                </div>
+                <h3>{d.t}</h3>
+                <p>{d.p}</p>
+              </Rv>
+            ))}
+          </div>
+        </section>
 
         {/* ═══ 設施營運 ═══ */}
         <section className="sect wrap" id="features">
@@ -230,13 +283,25 @@ export default function Home() {
           media={<Gallery shots={S_ENV} />}
         />
 
-        {/* ═══ 現場部署 ═══ */}
+        {/* ═══ 部署方式 ═══ */}
         <section className="sect wrap" id="deploy">
           <SectHead
-            eyebrow="現場部署 · 資料安全"
-            title={<>系統裝在大樓裡，資料留在業主手上。</>}
-            sub="整套系統部署在案場自己的主機與內網，設備資料、工單、照片都不經過外部雲端。"
+            eyebrow="部署方式 · 資料安全"
+            title={<>雲端或地端，依需求選擇。</>}
+            sub="要資料完全留在大樓裡，就裝在案場主機；不想在現場架主機，就放在雲端。"
           />
+          <div className="fgrid fgrid-2">
+            {MODES.map((d, i) => (
+              <Rv key={d.t} className="fcard" delay={(i + 1) as 1 | 2 | 3}>
+                <div className="fic" aria-hidden="true">
+                  {d.ic}
+                </div>
+                <h3>{d.t}</h3>
+                <p>{d.p}</p>
+              </Rv>
+            ))}
+          </div>
+          <h3 className="fgrid-head">選擇地端部署時</h3>
           <div className="fgrid">
             {DEPLOY.map((d, i) => (
               <Rv key={d.t} className="fcard" delay={((i % 3) + 1) as 1 | 2 | 3}>

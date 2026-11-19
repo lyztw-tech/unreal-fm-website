@@ -4,7 +4,7 @@ import { SITE_URL, absoluteAsset } from '@/lib/asset-path';
 
 const TITLE = '智慧建築維運平台｜設備、告警、影像、工單與能源，一個 3D 模型看全部';
 const DESC =
-  '以 BIM 模型為底的大樓維運系統：資產管理、告警清單、影像監控、報修與預防保養、手機出勤、用電用水與碳排、室內環境監測——點設備，鏡頭就飛到它在哪裡。';
+  '以 BIM 模型為底的大樓維運系統：資產管理、告警清單、影像監控、報修與預防保養、手機出勤、用電用水與碳排、室內環境監測——點設備，鏡頭就飛到它在哪裡。桌面程式與網頁版雙平台，可選雲端或地端部署。';
 
 export const metadata: Metadata = {
   title: TITLE,

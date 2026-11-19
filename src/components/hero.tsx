@@ -1,4 +1,4 @@
-/** 飛行導覽之後的三個數字（大標題已移到 fly-intro 第一段）。 */
+/** 飛行導覽之後的四個重點數字（大標題已移到 fly-intro 第一段）。 */
 export function Hero() {
   return (
     <section className="hero hero-stats">
@@ -18,9 +18,15 @@ export function Hero() {
           </div>
           <div className="stat">
             <b>
-              內網<em>部署</em>
+              雙<em>平台</em>
             </b>
-            <span>系統裝在案場，資料不出大樓</span>
+            <span>桌面程式＋網頁版，同一份資料</span>
+          </div>
+          <div className="stat">
+            <b>
+              雲端<em>／地端</em>
+            </b>
+            <span>依需求選擇部署方式</span>
           </div>
         </div>
         <p className="stats-proof">

@@ -5,9 +5,10 @@ import Link from 'next/link';
 import { Mark } from './mark';
 
 const LINKS = [
+  { href: '/#platforms', label: '雙平台' },
   { href: '/#features', label: '功能' },
   { href: '/#mobile', label: '行動端' },
-  { href: '/#deploy', label: '現場部署' },
+  { href: '/#deploy', label: '部署方式' },
   { href: '/#vision', label: '藍圖' },
 ];
 

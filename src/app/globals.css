@@ -798,13 +798,26 @@ button {
   font-size: 14.5px;
   color: var(--ink-2);
 }
+.fgrid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+.fgrid-head {
+  margin-top: 44px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink-2);
+}
+.fgrid-head + .fgrid {
+  margin-top: 14px;
+}
 @media (max-width: 900px) {
   .fgrid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 @media (max-width: 560px) {
-  .fgrid {
+  .fgrid,
+  .fgrid-2 {
     grid-template-columns: 1fr;
   }
 }
