@@ -38,10 +38,8 @@ jobs:
       - name: Build (static export)
         run: npm run build
         env:
-          # 目前先放在 github.io 專案頁（about.fm.lyztw.com 的 DNS 還沒設）。
-          # 換成自訂網域時：刪掉 NEXT_PUBLIC_BASE_PATH 這行、SITE_ORIGIN 改 https://about.fm.lyztw.com、加回 public/CNAME（見 PROGRESS.md）。
-          NEXT_PUBLIC_BASE_PATH: /${{ github.event.repository.name }}
-          NEXT_PUBLIC_SITE_ORIGIN: https://lyztw-tech.github.io
+          # 自訂網域 about.fm.nexa.lyztw.com（public/CNAME），網站在根目錄，不需要 basePath。
+          NEXT_PUBLIC_SITE_ORIGIN: https://about.fm.nexa.lyztw.com
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./out

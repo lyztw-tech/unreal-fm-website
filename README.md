@@ -1,6 +1,6 @@
 # unreal-fm-website — 智慧建築維運平台宣傳官網
 
-單頁靜態網站（Next.js 16 App Router、`output: 'export'`），部署到 GitHub Pages：目前在 https://lyztw-tech.github.io/unreal-fm-website/ ，之後換自訂網域 `about.fm.lyztw.com`（步驟見 PROGRESS.md）。
+單頁靜態網站（Next.js 16 App Router、`output: 'export'`），部署到 GitHub Pages：網址 https://about.fm.nexa.lyztw.com/ （public/CNAME）。
 
 ## 結構
 
