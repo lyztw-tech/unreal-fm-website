@@ -9,7 +9,7 @@
 - 2026-11-11：上線到 GitHub Pages 專案頁 https://lyztw-tech.github.io/unreal-fm-website/ 。開頭 three.js 捲動飛行＋氛圍特效；功能區產品畫面全部網頁畫（不放截圖）。
 
 ## 下一步
-- [ ] repo Settings → Pages：憑證好了勾 Enforce HTTPS
+- [x] repo Settings → Pages：Enforce HTTPS 已勾（11/20）
 
 ## 待釐清
 - 預約展示的收件信箱目前比照 Nexa 用 dev@lyztw.com
