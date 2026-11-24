@@ -30,7 +30,7 @@ export function Hero() {
           </div>
         </div>
         <p className="stats-proof">
-          本頁畫面擷取自實際運行的展示環境；能源與環境數值為示意資料，案場名稱已隱藏。
+          本頁畫面為依實際系統介面繪製的示意，數字為示範資料。
         </p>
       </div>
     </section>
