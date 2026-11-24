@@ -71,7 +71,7 @@ export function Footer() {
         <div className="foot-brand">
           <Link className="brand" href="/">
             <Mark size={26} />
-            智慧建築維運平台
+            FMSync
           </Link>
           <p className="foot-tag">大樓設施維運管理系統</p>
           <p className="foot-co">萊茲特資訊科技</p>

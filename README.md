@@ -1,4 +1,4 @@
-# unreal-fm-website — 智慧建築維運平台宣傳官網
+# unreal-fm-website — FMSync宣傳官網
 
 單頁靜態網站（Next.js 16 App Router、`output: 'export'`），部署到 GitHub Pages：網址 https://about.fm.nexa.lyztw.com/ （public/CNAME）。
 

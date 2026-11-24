@@ -1,6 +1,6 @@
 # PROGRESS.md — 目前進度
 
-> 智慧建築維運平台（unreal-fm）宣傳官網。產品本身的進度記在 UE repo（unreal-fm）與後端 repo（unreal-fm-be）；本檔只記官網自己的事。
+> FMSync（unreal-fm）宣傳官網。產品本身的進度記在 UE repo（unreal-fm）與後端 repo（unreal-fm-be）；本檔只記官網自己的事。
 
 ## 最後更新
 - 日期：2026-11-20

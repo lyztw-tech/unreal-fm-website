@@ -38,7 +38,7 @@ export function Nav() {
       <div className="wrap nav-in">
         <Link className="brand" href="/#top">
           <Mark />
-          智慧建築維運平台
+          FMSync
         </Link>
         <div className="nav-links">
           {LINKS.map((l) => (
