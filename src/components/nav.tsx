@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Mark } from './mark';
+import { PlatformSwitch } from './platform';
 
 const LINKS = [
   { href: '/#platforms', label: '雙平台' },
@@ -40,6 +41,7 @@ export function Nav() {
           <Mark />
           FMSync
         </Link>
+        <PlatformSwitch />
         <div className="nav-links">
           {LINKS.map((l) => (
             <Link key={l.href} href={l.href}>

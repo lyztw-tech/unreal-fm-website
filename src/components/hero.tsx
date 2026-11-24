@@ -20,7 +20,7 @@ export function Hero() {
             <b>
               雙<em>平台</em>
             </b>
-            <span>桌面程式＋網頁版，同一份資料</span>
+            <span>應用程式＋網頁版，同一份資料</span>
           </div>
           <div className="stat">
             <b>

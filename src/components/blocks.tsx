@@ -1,7 +1,10 @@
+'use client';
+
 import Link from 'next/link';
 import { Rv } from './reveal';
 import { Mark } from './mark';
 import { asset } from '@/lib/asset-path';
+import { usePlatform } from './platform';
 
 /** 單張產品截圖。桌面應用程式的畫面，不加瀏覽器網址列。 */
 export function Shot({ title, src }: { title: string; src: string }) {
@@ -13,6 +16,9 @@ export function Shot({ title, src }: { title: string; src: string }) {
   );
 }
 
+/** 功能列在「網頁」時要換掉的部分；沒給的沿用應用程式的內容。 */
+export type WebVariant = { title?: React.ReactNode; desc?: string; points?: string[]; media?: React.ReactNode };
+
 /** 功能列：左右分欄，flip 換邊。media 放 Gallery。 */
 export function FeatureRow({
   id,
@@ -23,6 +29,7 @@ export function FeatureRow({
   points,
   media,
   flip,
+  web,
 }: {
   id?: string;
   no: string;
@@ -32,11 +39,15 @@ export function FeatureRow({
   points: string[];
   media: React.ReactNode;
   flip?: boolean;
+  web?: WebVariant;
 }) {
+  const { p } = usePlatform();
+  const v = (p === 'web' && web) || {};
+  const list = v.points ?? points;
   return (
     <section className={`frow wrap${flip ? ' flip' : ''}`} id={id}>
       <Rv as="figure" className="frow-media">
-        {media}
+        {v.media ?? media}
       </Rv>
       <div className="frow-text">
         <Rv>
@@ -46,15 +57,15 @@ export function FeatureRow({
           </span>
         </Rv>
         <Rv as="h3" delay={1}>
-          {title}
+          {v.title ?? title}
         </Rv>
         <Rv as="p" className="desc" delay={1}>
-          {desc}
+          {v.desc ?? desc}
         </Rv>
-        {points.length > 0 && (
+        {list.length > 0 && (
           <Rv as="ul" className="frow-points" delay={2}>
-            {points.map((p) => (
-              <li key={p}>{p}</li>
+            {list.map((t) => (
+              <li key={t}>{t}</li>
             ))}
           </Rv>
         )}

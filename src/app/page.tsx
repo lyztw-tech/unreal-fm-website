@@ -19,6 +19,24 @@ import {
   EnvOverviewMock,
   EnvTrendMock,
 } from '@/components/mock-more';
+import {
+  WebHomeMock,
+  WebAssetListMock,
+  WebAssetDetailMock,
+  WebAlarmMock,
+  WebCamMock,
+  WebCamDetailMock,
+  WebRepairMock,
+  WebPmMock,
+  WebPowerMock,
+  WebPowerSplitMock,
+  WebHeatMock,
+  WebWaterMock,
+  WebCarbonMock,
+  WebEnvMock,
+  WebEnvTrendMock,
+} from '@/components/mock-web';
+import { PlatformProvider } from '@/components/platform';
 
 /* 文案原則：只寫系統現在真的有的功能（對照 docs/feature-copy.md）。 */
 
@@ -61,11 +79,44 @@ const S_ENV: ShotDef[] = [
   { label: '趨勢分析', title: '門檻線與異常時段標示，附期間統計', node: <EnvTrendMock /> },
 ];
 
-/* 雙平台：桌面程式（UE）＋網頁版（fm-platform），共用同一個後端（見 docs/feature-copy.md「雙平台」） */
+/* ── 網頁版的畫面（頂部切到「網頁」時顯示） ── */
+const W_HOME: ShotDef[] = [
+  { label: '今日總覽', title: '今日總覽：待複查與處理中的工單、各系統可用率', node: <WebHomeMock /> },
+];
+const W_ASSET: ShotDef[] = [
+  { label: '資產清冊', title: '設備、位置、類型、狀態與下次保養', node: <WebAssetListMock /> },
+  { label: '設備詳情', title: '即時讀值、狀態歷史與維修履歷，可在模型上顯示', node: <WebAssetDetailMock /> },
+];
+const W_ALARM: ShotDef[] = [
+  { label: '告警中心', title: '只列目前有告警的設備，點進去看告警並可直接報修', node: <WebAlarmMock /> },
+];
+const W_CAM: ShotDef[] = [
+  { label: '監視器', title: '監視器畫面一頁排開', node: <WebCamMock /> },
+  { label: '單一畫面', title: '放大畫面與設備資料，可在模型上顯示', node: <WebCamDetailMock /> },
+];
+const W_REPAIR: ShotDef[] = [
+  { label: '報修管理', title: '依階段分列，處理過程依時間軸記錄', node: <WebRepairMock /> },
+];
+const W_PM: ShotDef[] = [
+  { label: '預防保養', title: '已逾期、處理中、已結案、已作廢與計畫總覽', node: <WebPmMock /> },
+];
+const W_POWER: ShotDef[] = [
+  { label: '用電即時', title: '需量對照契約容量、今日負載與正常區間、用電異常', node: <WebPowerMock /> },
+  { label: '分項・樓層', title: '分項用電占比與樓層用電強度排行', node: <WebPowerSplitMock /> },
+  { label: '3D 熱力圖', title: '樓層用電強度畫在模型上（示意模型）', node: <WebHeatMock /> },
+  { label: '用水', title: '用水即時流量與持續漏水偵測', node: <WebWaterMock /> },
+  { label: '營運碳排', title: '依排放係數換算，月比較', node: <WebCarbonMock /> },
+];
+const W_ENV: ShotDef[] = [
+  { label: '總覽', title: '各監測位置即時數值與分級', node: <WebEnvMock /> },
+  { label: '趨勢分析', title: '門檻線與異常時段標示，附期間統計', node: <WebEnvTrendMock /> },
+];
+
+/* 雙平台：應用程式（UE）＋網頁版（fm-platform），共用同一個後端（見 docs/feature-copy.md「雙平台」） */
 const PLATFORMS = [
   {
     ic: '▣',
-    t: '桌面程式',
+    t: '應用程式',
     p: '即時 3D 引擎呈現整棟大樓：透視、依樓層剖開、監視牆可開成獨立視窗，適合中控室的大螢幕。',
   },
   {
@@ -85,7 +136,7 @@ const MODES = [
   {
     ic: '⌂',
     t: '地端部署',
-    p: '整套系統裝在案場自己的主機與內網，桌面程式與網頁版都能用；設備資料、工單、照片不經過外部雲端。',
+    p: '整套系統裝在案場自己的主機與內網，應用程式與網頁版都能用；設備資料、工單、照片不經過外部雲端。',
   },
   {
     ic: '☁',
@@ -99,7 +150,7 @@ const DEPLOY = [
   {
     ic: '⌂',
     t: '部署在案場主機',
-    p: '桌面程式、後端服務與資料庫都裝在大樓自己的電腦上，點一下啟動程式就會依序開好。',
+    p: '應用程式、後端服務與資料庫都裝在大樓自己的電腦上，點一下啟動程式就會依序開好。',
   },
   {
     ic: '⇄',
@@ -114,7 +165,7 @@ const DEPLOY = [
   {
     ic: '⚿',
     t: '帳密只留在後端',
-    p: '影像監控需要連到攝影機或影像平台時，由後端代為連線，帳號密碼不會出現在桌面程式或手機上。',
+    p: '影像監控需要連到攝影機或影像平台時，由後端代為連線，帳號密碼不會出現在應用程式或手機上。',
   },
   {
     ic: '▤',
@@ -140,7 +191,7 @@ const VISION = [
 
 export default function Home() {
   return (
-    <>
+    <PlatformProvider>
       <Nav />
       <main>
         <FlyIntro />
@@ -150,8 +201,8 @@ export default function Home() {
         <section className="sect wrap" id="platforms">
           <SectHead
             eyebrow="雙平台"
-            title={<>中控室用桌面程式，辦公室開瀏覽器。</>}
-            sub="桌面程式與網頁版共用同一個後端與資料，依使用的場合選擇，也可以兩個一起用。"
+            title={<>中控室用應用程式，辦公室開瀏覽器。</>}
+            sub="應用程式與網頁版共用同一個後端與資料，依使用的場合選擇，也可以兩個一起用。"
           />
           <div className="fgrid">
             {PLATFORMS.map((d, i) => (
@@ -182,6 +233,10 @@ export default function Home() {
           desc="建築概況、資產狀態（正常／警告／異常／離線／維護中）、各系統可用率、報修與保養待辦、影像縮圖集中在首頁；點任一格直接帶到對應清單。"
           points={[]}
           media={<Gallery shots={S_HOME} />}
+          web={{
+            desc: '待複查與處理中的工單、各系統可用率與逾期保養集中在首頁，旁邊就是大樓的 3D 模型；點任一項直接進到內容。',
+            media: <Gallery key="w" shots={W_HOME} />,
+          }}
         />
         <FeatureRow
           flip
@@ -195,6 +250,12 @@ export default function Home() {
             '近 7 天狀態歷史與可用率',
           ]}
           media={<Gallery shots={S_ASSET} />}
+          web={{
+            title: <>打開設備，在模型上找到它。</>,
+            desc: '設備清冊列出位置、類型、狀態與下次保養。打開一台設備，即時讀值、狀態歷史、進行中的工單與維修履歷都在同一頁；按「在模型上顯示」，鏡頭就帶到位置。',
+            points: ['運轉、通訊、服務分開顯示——停機不等於異常', '近 7 天狀態歷史與可用率', '上方搜尋可直接找設備、工單或位置'],
+            media: <Gallery key="w" shots={W_ASSET} />,
+          }}
         />
         <FeatureRow
           no="02"
@@ -203,6 +264,10 @@ export default function Home() {
           desc="設備有告警才會出現在清單上，告警解除就自動移出。點選即定位到模型並列出該設備的告警紀錄，也可以直接在這裡建立報修或保養工單。"
           points={[]}
           media={<Gallery shots={S_ALARM} />}
+          web={{
+            desc: '設備有告警才會出現在清單上，告警解除就自動移出。點進設備可看它目前的所有告警，也可以直接在這裡報修。',
+            media: <Gallery key="w" shots={W_ALARM} />,
+          }}
         />
         <FeatureRow
           flip
@@ -218,6 +283,12 @@ export default function Home() {
           desc="透視模式顯示每支監視器的位置與拍攝範圍；監視牆分頁一次看多路畫面，也可放大單一畫面或開成獨立視窗。"
           points={['支援 HLS 串流，帳密只留在後端', '有人在看才連線，不看就自動斷開省頻寬']}
           media={<Gallery shots={S_CAM} />}
+          web={{
+            title: <>監視器畫面，開瀏覽器就能看。</>,
+            desc: '監視器畫面一頁排開，點一支看大畫面與設備資料，並可在模型上顯示它的位置。',
+            points: ['支援 HLS 串流，瀏覽器直接播放', '斷線自動重新連線'],
+            media: <Gallery key="w" shots={W_CAM} />,
+          }}
         />
 
         {/* ═══ 維運作業 ═══ */}
@@ -236,6 +307,10 @@ export default function Home() {
           desc="工單可綁定設備或空間。處理中、已結案、已作廢分開列；狀態、留言與照片依時間記錄，結案後寫進設備的維修履歷。"
           points={[]}
           media={<Gallery shots={S_REPAIR} />}
+          web={{
+            desc: '工單可綁定設備或空間。待複查、處理中、已結案、已作廢分開列；狀態、留言與照片依時間記錄，結案後列入設備的維修履歷。',
+            media: <Gallery key="w" shots={W_REPAIR} />,
+          }}
         />
         <FeatureRow
           flip
@@ -245,6 +320,10 @@ export default function Home() {
           desc="每台設備記錄安裝日、保固、上次保養與保養週期，系統算出下次保養日並標示即將到期與逾期；首頁直接顯示保養到期的設備數。"
           points={['保養單與報修單分開，各有自己的履歷']}
           media={<Gallery shots={[S_ASSET[2]]} />}
+          web={{
+            desc: '系統依保養週期算出每台設備的下次保養日；已逾期、處理中、已結案、已作廢各一個分頁，計畫總覽列出每台設備的週期。首頁直接顯示逾期保養的設備。',
+            media: <Gallery key="w" shots={W_PM} />,
+          }}
         />
         <FeatureRow
           id="mobile"
@@ -272,6 +351,7 @@ export default function Home() {
           desc="15 分鐘需量對照契約容量分級提醒；非營業時間用電偏高、負載突增、樓層用電偏高等異常自動列出。分項與樓層用電強度排行，並可在 3D 模型上以熱力圖呈現。"
           points={['用水：即時流量、水錶讀值、持續漏水偵測', '車用充電樁：充電狀態與今日充電量', '營運碳排：依排放係數換算，月比較與樓層排名']}
           media={<Gallery shots={S_POWER} />}
+          web={{ media: <Gallery key="w" shots={W_POWER} /> }}
         />
         <FeatureRow
           flip
@@ -281,6 +361,7 @@ export default function Home() {
           desc="監測溫度、濕度、CO₂ 與 PM2.5，依智慧建築標章健康舒適指標分 A～D 級；總覽看各位置即時數值，趨勢分析可選 24 小時、7 天、30 天或自訂區間，異常事件記錄開始時間、持續多久與峰值。"
           points={['持續超標才觸發、恢復穩定才解除，不會一直跳']}
           media={<Gallery shots={S_ENV} />}
+          web={{ media: <Gallery key="w" shots={W_ENV} /> }}
         />
 
         {/* ═══ 部署方式 ═══ */}
@@ -342,7 +423,7 @@ export default function Home() {
           <Rv delay={2}>
             <a
               className="btn btn-primary"
-              href="mailto:dev@lyztw.com?subject=%E6%99%BA%E6%85%A7%E5%BB%BA%E7%AF%89%E7%B6%AD%E9%81%8B%E5%B9%B3%E5%8F%B0%20%E5%B1%95%E7%A4%BA%E9%A0%90%E7%B4%84"
+              href="mailto:dev@lyztw.com?subject=FMSync%20%E5%B1%95%E7%A4%BA%E9%A0%90%E7%B4%84"
             >
               預約展示
             </a>
@@ -352,6 +433,6 @@ export default function Home() {
       </main>
 
       <Footer />
-    </>
+    </PlatformProvider>
   );
 }

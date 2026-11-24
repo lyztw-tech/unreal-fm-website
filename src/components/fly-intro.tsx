@@ -197,7 +197,7 @@ export function FlyIntro() {
                     看它怎麼運作 ›
                   </a>
                 </div>
-                <p className="fly-note">桌面程式＋網頁版 · 雲端或地端部署 · 同一份資料</p>
+                <p className="fly-note">應用程式＋網頁版 · 雲端或地端部署 · 同一份資料</p>
                 <span className="fly-hint">往下捲動，飛進大樓 ↓</span>
               </>
             )}

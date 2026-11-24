@@ -13,7 +13,7 @@ export type ShotDef = {
   node?: React.ReactNode;
   /** 外框不加內距（3D 場景要貼滿） */
   bare?: boolean;
-  /** 這一張是桌面程式還是手機頁 */
+  /** 這一張是應用程式還是手機頁 */
   ratio?: 'web' | 'phone';
 };
 
